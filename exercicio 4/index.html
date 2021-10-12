@@ -1,0 +1,75 @@
+<!DOCTYPE HTML>
+<html lang="pt-br">
+   <head>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <meta charset="UTF-8">
+      <title> Estoque de compras </title>
+   </head>
+<body>
+
+<form>
+Nome Loja: <input type="text" name="nome" id="nome" value=""><br><br>
+Data: <input type="text" name="data" id="data" value=""><br><br>
+<input type="button" value="Alterar Nome  e Data" onclick="altera()"><br><br>
+-------------------------------------<br>
+Adicionar produtos ao estoque<br><BR>
+Produto: <input type="text" name="nome" id="nome_produto"><br><br>
+Preco: <input type="text" name="nome" id="preco"><br><br>
+<input type="button" value="Adicionar Produto ao estoque" onclick="insere()"><br><br>
+-------------------------------------<br>
+Produtos em estoque
+<div id="lista">...</div>
+
+
+</form>
+<script>  
+
+   let estoque = { 
+    nome: "Fulano de Tal",
+    data: "11/11/2014", 
+    produtos:[
+    {nome_produto: "banana",preco: 2.00},
+    {nome_produto: "maca",preco: 2.50},
+    {nome_produto: "laranja",preco: 3.00}
+    ]
+ };
+
+ function mostra(){
+    let valor = "";
+    valor+= "Nome Loja: "+ estoque.nome
+    +"<br>"
+    +"Data: "+ estoque.data
+    +"<br><BR> Estoque:<br>";
+    
+    for (let i = 0;i<estoque.produtos.length; i++) {
+       valor+="Produto: "+ estoque.produtos[i].nome_produto;
+       valor+="-----------------";
+       valor+="Preco: "+estoque.produtos[i].preco;
+       valor+="-----------------";
+       valor+="<input type='button'  value='Excluir' onclick = 'excluir("+i+")'>";
+       valor+="<br>";
+       
+    }
+    document.querySelector("#lista").innerHTML=valor;
+ }
+
+ function altera(){
+    estoque.nome=document.querySelector("#nome").value;
+    estoque.data=document.querySelector("#data").value;
+    mostra();
+ }
+
+ function insere(){
+    estoque.produtos.push({nome_produto:document.querySelector("#nome_produto").value,preco:document.querySelector("#preco").value}); 
+    mostra();
+ }
+ function excluir(num){
+    estoque.produtos.splice(num,1);
+    mostra();
+
+ }
+
+
+</script>
+
+</body></html>
