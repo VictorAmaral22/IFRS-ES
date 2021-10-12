@@ -4,23 +4,61 @@ Ao clicar no novo botão o JS deve imprimir na tela o nome dos alunos inscritos 
 */
 
 function enviar(){
-    const div = document.getElementById('div');
+    const table = document.getElementById('table');
     let alunos = document.getElementById('alunoNum').value;
     var erro = 0;
     if(Math.sign(alunos) != 1){
-        document.getElementById('alunoNum').style.borderColor = 'red';
-    } else {
-        for(let c=0; c < alunos; c++){
-            const input=document.createElement('input');
-            input.type='text';
-            input.required=true;
-            div.append(input);
-        }            
-
-        // console.log(array);
-        // for(let i = 0; i < array.length-1; i++){
-        //     document.getElementById('div').appendChild = array[i];
-        // }
+        erro++;
+        document.getElementById('alunoNum').className = 'erro';
     }
+    if(erro == 0){
+        var exists = document.getElementsByClassName('buttonConfirm');
+        if(exists.length == 0){
+            var row = table.insertRow(0);
+            row.id = 'rowConfirm';
+            var td = row.insertCell(0);
+            var p = document.createElement('p');
+            p.id = 'text';
+            td.id = 'cellConfirm';
+            var buttonYes = document.createElement('button');
+            buttonYes.id = 'buttonYes'; buttonYes.className = 'buttonConfirm'; 
+            buttonYes.innerHTML = 'Sim';
+            buttonYes.onclick = confirmar();
     
+            var buttonNo = document.createElement('button');
+            buttonNo.id = 'buttonNo'; buttonNo.className = 'buttonConfirm'; 
+            buttonNo.onclick = function (){
+                var delRow = document.getElementById('rowConfirm');
+                delRow.parentNode.removeChild(delRow);
+            }
+            buttonNo.innerHTML = 'Não';
+            
+            var txt = document.createTextNode(`Deseja mesmo cadastrar ${alunos} alunos?`);
+            
+            p.appendChild(txt);
+            td.appendChild(p);
+            td.appendChild(buttonYes);
+            td.appendChild(buttonNo);
+
+            // campos
+            
+        } else {
+            var txt = document.createTextNode(`Deseja mesmo cadastrar ${alunos} alunos?`);
+            var p = document.getElementById('text');
+            p.innerHTML = '';
+            p.appendChild(txt);
+        }
+    }
+}
+
+function confirmar(){
+    let alunos = document.getElementById('alunoNum').value;
+}
+
+function removeErr(elem){
+    document.getElementById(elem).classList.remove('erro');
+}
+
+function addCampos() {
+    var table = document.getElementById('alunoNum');
 }

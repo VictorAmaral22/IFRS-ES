@@ -10,14 +10,12 @@
 <body>
 
     <h1>Informe quantos alunos deseja cadastrar: </h1>
-    <input id='alunoNum' type="number" required>
+    <input id='alunoNum' type="number" required onclick="removeErr('alunoNum')">
     <button onclick="enviar()">Enviar</button>
 
-    <div id="div">
-    </div>
-    <div id='divButton'>
-        
-    </div>
+    <table id="table">
+        <!-- ... -->
+    </table>
     <script src="index.js"></script>
 </body>
 </html>
