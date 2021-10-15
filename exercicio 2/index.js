@@ -35,7 +35,7 @@ function enviarForm(){
         cpf.forEach(element => {
             if(!array.includes(element)){
                 erro2++;
-                console.log('errou nuemro')
+                console.log('errou numero')
             }
         });
         if(erro2 != 0){
