@@ -15,16 +15,16 @@
       <!-- nome -->
       <div class="col-12">
          <label class="form-label">Nome:</label>
-         <input type="text" name="aluno_nome" id="aluno_nome" class="form-control">
+         <input type="text" name="aluno_nome" id="aluno_nome" class="form-control" placeholder="ex: Josivaldo Pereira da Silva" onClick="unsetError('aluno_nome')">
       </div>
       <!-- data -->
       <div class="col-12">
          <label class="form-label">CPF:</label>
-         <input type="number" name="aluno_CPF" id="aluno_CPF" class="form-control">
+         <input type="number" name="aluno_CPF" id="aluno_CPF" class="form-control" placeholder="ex: 12345678912" onClick="unsetError('aluno_CPF')">
       </div>
       <div class="col-12">
         <label class="form-label">Matrícula:</label>
-        <input type="text" name="aluno_matricula" id="aluno_matricula" class="form-control">
+        <input type="text" name="aluno_matricula" id="aluno_matricula" class="form-control" placeholder="ex: 11030300" onClick="unsetError('aluno_matricula')">
      </div>
       <!-- button -->
       <div class="col-12">
@@ -35,63 +35,61 @@
       <!-- produto -->
       <div class="col-12">
          <label for="inputAddress" class="form-label">Nome:</label>
-         <input type="text" class="form-control" id="professor_nome">
+         <input type="text" class="form-control" id="professor_nome" placeholder="ex: Nome" onClick="unsetError('professor_nome')">
       </div>
       <!-- preco -->
       <div class="col-12">
          <label for="inputAddress2" class="form-label">CPF:</label>
-         <input type="text" class="form-control" id="professor_CPF">
+         <input type="text" class="form-control" id="professor_CPF" placeholder="ex: 12345678912"  onClick="unsetError('professor_CPF')">
       </div>
       <div class="col-12">
         <label for="inputAddress2" class="form-label">Area:</label>
-        <input type="text" class="form-control" id="professor_area">
+        <input type="text" class="form-control" id="professor_area" placeholder="ex: Matemática" onClick="unsetError('professor_area')" >
      </div>
      <div class="col-12">
         <label for="inputAddress2" class="form-label">Telefone:</label>
-        <input type="text" class="form-control" id="professor_telefone">
+        <input type="text" class="form-control" id="professor_telefone" placeholder="ex: (53) 91234-5678" onClick="unsetError('professor_telefone')">
      </div>
       <!-- button -->
       <div class="col-12">
          <input type="button" class="btn btn-primary" onClick="addProfessor()" value="Adicionar professor" />
       </div>
+      
       <h5>Criar Turma</h5>
       <div class="col-12">
         <label for="inputAddress" class="form-label">nome:</label>
-        <input type="text" class="form-control" id="nome_produto">
+        <input type="text" class="form-control" id="turma_nome" onClick="unsetError('turma_nome')" placeholder="ex: Nome">
      </div>
      <div class="col-12">
-        <input type="button" class="btn btn-primary" onClick="addTurma()" value="Criar Truma" />
+        <input type="button" class="btn btn-primary" onClick="addTurma()" value="Criar Truma"  />
      </div>
       <hr>  
    </form>
-   <ul id="lista" class="list-group">
-   </ul>
-   <!-- <div class="accordion" id="accordionExample">
-      <div class="accordion-item">
-         <h2 class="accordion-header" id="headingOne">
-            <button class="accordion-button" type="button" onclick="hideAccordion(1)" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-               Estoque:
-            </button>
-         </h2>
-         <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-            <div id="estoque" class="accordion-body">
-            </div>
-         </div>
-      </div>
-   </div>
-   <div class="accordion" id="accordionExample2">
-      <div class="accordion-item">
-         <h2 class="accordion-header" id="headingTwo">
-            <button class="accordion-button" type="button" onclick="hideAccordion(2)" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-               Carrinho de compras:
-            </button>
-         </h2>
-         <div id="collapseTwo" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-            <div id="carrinho" class="accordion-body">
-            </div>
-         </div>
-      </div>
-   </div> -->
+   <table class="table table-hover" id="table-prof">
+      <thead>
+         <tr>
+            <th>Turma</th>
+            <th>Cpf Prof</th>
+            <th>Nome Prof</th>
+            <th>Area Prof</th>
+            <th>Telefone Prof</th>
+         </tr>
+      </thead>
+      <tbody id="rows-prof">
+      </tbody>
+   </table>
+   <table class="table table-hover" id="table-aluno">
+      <thead>
+         <tr>
+            <th>Turma</th> 
+            <th>Cpf Aluno</th>
+            <th>Nome Aluno</th>
+            <th>Matrícula Aluno</th>
+         </tr>
+      </thead>
+      <tbody id="rows-aluno">
+      </tbody>
+   </table>
 </div>
 <br>
 <br>

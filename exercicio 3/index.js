@@ -4,6 +4,7 @@ Ao clicar no novo botão o JS deve imprimir na tela o nome dos alunos inscritos 
 */    
 let colunas = 0;
 let botao = 0;
+let enviado = 0
 function enviar(){
     const div = document.getElementById('div');
     const divText = document.getElementById('divText');
@@ -13,94 +14,51 @@ function enviar(){
     if(Math.sign(alunos) != 1){
         document.getElementById('alunoNum').style.borderColor = 'red';
     } else {
-        for(let c=0; c < alunos; c++){
-            if(alunos>=colunas){
-                let novasColunas= alunos-colunas
+        for(let c=0; c < alunos.length; c++){
+            if(alunos >= colunas){
+                let novasColunas = alunos-colunas
                 for(let c=0; c < novasColunas; c++){
                     const input=document.createElement('input');
-                    input.id='input2'
+                    input.id='input'+(c+1);
                     input.type='text';
                     input.required=true;
                     div.append(input);
                     colunas+=1
                 }
-            }else if(alunos<colunas){
-                let tirarColunas= colunas-alunos
+            } else if(alunos <= colunas){
+                let tirarColunas = colunas-alunos
                 for(let c=0; c < tirarColunas; c++){
-                    const input=document.getElementsById('input2');
-                    input.remove();
-                    colunas--
+                    const input = document.getElementById('input'+(c+1));
+                    input.parentNode.removeChild(input);
+                    colunas--;
                 }
             }
         }
         if(botao == 0){
-            const button=document.createElement('button');
-            button.textContent='Finalizar'
-            button.onclick = ()=>{
-                for(let c=0; c < colunas; c++){
-                    const p=document.createElement('p');
-                    const input=document.getElementsById('input2');
-                    p.textContent=input.value
-                    div.append(p);
-                    colunas+=1
+            var teste = document.getElementById('finalizar');
+            if(teste == null){
+                const button=document.createElement('button');
+                button.textContent='Finalizar';
+                button.id = 'finalizar';
+                button.onclick = () => {
+                    for(let c=0; c < colunas; c++){
+                        const p = document.createElement('p');
+                        p.id='p'
+                        const input = document.getElementById('input'+(c+1));
+                        console.log(input);
+                        p.innerHTML = input.value
+                        div.append(p);
+                    }
+                    botao += 1;
+                    enviado +=1;
+                    button.disabled = true;
                 }
+                divButton.append(button);
             }
-            divButton.append(button);
-            botao+=1
         }
-        // console.log(array);
-        // for(let i = 0; i < array.length-1; i++){
-        //     document.getElementById('div').appendChild = array[i];
-        // }
-    }
-    if(erro == 0){
-        var exists = document.getElementsByClassName('buttonConfirm');
-        if(exists.length == 0){
-            var row = table.insertRow(0);
-            row.id = 'rowConfirm';
-            var td = row.insertCell(0);
-            var p = document.createElement('p');
-            p.id = 'text';
-            td.id = 'cellConfirm';
-            var buttonYes = document.createElement('button');
-            buttonYes.id = 'buttonYes'; buttonYes.className = 'buttonConfirm'; 
-            buttonYes.innerHTML = 'Sim';
-            buttonYes.onclick = confirmar();
-    
-            var buttonNo = document.createElement('button');
-            buttonNo.id = 'buttonNo'; buttonNo.className = 'buttonConfirm'; 
-            buttonNo.onclick = function (){
-                var delRow = document.getElementById('rowConfirm');
-                delRow.parentNode.removeChild(delRow);
-            }
-            buttonNo.innerHTML = 'Não';
-            
-            var txt = document.createTextNode(`Deseja mesmo cadastrar ${alunos} alunos?`);
-            
-            p.appendChild(txt);
-            td.appendChild(p);
-            td.appendChild(buttonYes);
-            td.appendChild(buttonNo);
-
-            // campos
-            
-        } else {
-            var txt = document.createTextNode(`Deseja mesmo cadastrar ${alunos} alunos?`);
-            var p = document.getElementById('text');
-            p.innerHTML = '';
-            p.appendChild(txt);
+        if(enviado > 0){
+            var button = document.getElementById('enviar');
+            button.disabled = true;
         }
     }
-}
-
-function confirmar(){
-    let alunos = document.getElementById('alunoNum').value;
-}
-
-function removeErr(elem){
-    document.getElementById(elem).classList.remove('erro');
-}
-
-function addCampos() {
-    var table = document.getElementById('alunoNum');
 }

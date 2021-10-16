@@ -1,14 +1,16 @@
-/* 5(2pt)- Em uma página HTML com JS:
-- Criar a classe pessoa(cpf,nome), herdada pelas classes professor(area, telefone) e aluno(matricula)
-- Criar a classe turma(professor, alunos,identificação) 
-- Criar métodos constructs para todas classes
-- Criar o método imprimeDados na classe turma. Este método imprime todos os dados da turma incluindo os dados do professor e de todos os alunos da turma. 
-Depois, diretamente no código:
-- Criar 2 objetos professores
-- Criar 6 objetos alunos 
-- Criar 2 objetos turmas de 4 alunos
-- Chamar o método imprime dados das duas turmas. 
-A impressão deve ser feita em uma página HTML5 padrão com bootstrap. Os dados da turma, professor e alunos devem estar em tabelas.*/
+/* 6(2pt) - Faça agora uma versão do exercício 5 aonde:
+- Seja mantida a mesma estrutura de classes;
+- Em um formulário é solicitado o nome, cpf e matricula de um aluno. 
+Com estes dados um objeto aluno deve ser criado e armazenado em um array de alunos. 
+Deve ser possível acrescentar quantos alunos o usuário quiser. 
+Ou seja cada vez que clicar em um botão “Adicionar aluno” um objeto aluno é adicionado ao array de alunos.
+- Em outro formulário é solicitado o nome, cpf, area e telefone de um professor. Com estes dados um objeto professor deve ser criado.
+- Em outro formulário é solicitada a identificação de 1 turma. Ao clicar em um botão “Criar turma” é criado um objeto turma. 
+Ao criar este objeto deve se passado ao seu construtor a identificação da turma, o objeto professor armazenado anteriormente e 
+o array de alunos armazenado anteriormente. Após criar o objeto turma, o método imprimeDados da turma deve ser chamado. 
+Este método irá mostrar na página todos dados da turma, de seu professor e de seus alunos.
+- Todos estes formulários e dados devem ser mostrados na mesma página
+*/
 
 class pessoa {
     constructor(cpf, nome){
@@ -40,7 +42,7 @@ class aluno extends pessoa{
 }
 
 class turma {
-    constructor(professor, alunos, id){
+    constructor(id, professor, alunos,){
         this.id = id;
         this.professor = professor;
         this.alunos = [];
@@ -55,26 +57,61 @@ class turma {
             alunos: this.alunos
         }
     }
+    imprimeTabela() {
+        var tableProf = document.getElementById('rows-prof');
+        var tableAluno = document.getElementById('rows-aluno');
+
+        var prof = tableProf.insertRow(-1);
+        var turmaProf = prof.insertCell(-1);
+        var cpfProf = prof.insertCell(-1);
+        var nomeProf = prof.insertCell(-1);
+        var areaProf = prof.insertCell(-1);
+        var telProf = prof.insertCell(-1);
+        turmaProf.innerHTML = this.id;
+        cpfProf.innerHTML = this.professor.cpf;
+        nomeProf.innerHTML = this.professor.nome;
+        areaProf.innerHTML = this.professor.area;
+        telProf.innerHTML = this.professor.telefone;
+        for (let c = 0; c < this.alunos.length; c++) {
+            var aluno = tableAluno.insertRow(-1);
+            var turmaAluno = aluno.insertCell(-1);
+            var cpfAluno = aluno.insertCell(-1);
+            var nomeAluno = aluno.insertCell(-1);
+            var matriculaAluno = aluno.insertCell(-1);
+            turmaAluno.innerHTML = this.id;
+            cpfAluno.innerHTML = this.alunos[c].cpf;
+            nomeAluno.innerHTML = this.alunos[c].nome;
+            matriculaAluno.innerHTML = this.alunos[c].matricula;
+        }
+    }
 }
+
+var alunos = [];
+function unsetError(index) {
+    console.log('Removendo erro');
+    var div = document.getElementById(index);
+    div.style.borderColor = 'black';
+}
+function setError (index) {
+    console.log('Erro!');
+    var div = document.getElementById(index);
+    div.style.borderColor = 'red';
+}
+
 function addAluno () {
     let nome = document.getElementById('aluno_nome').value;
-    let cpf = document.getElementById('aluno_cpf').value;
+    let cpf = document.getElementById('aluno_CPF').value;
     let matricula = document.getElementById('aluno_matricula').value;
     var erro = 0;
-       
-    var setError = (index) => {
-        console.log('Erro!');
-        document.getElementById(index).style.borderColor = 'red';
-    }
-    
+
     if(nome.trim() == '' || isNaN(nome) === false ){
-        setError('nome');
+        setError('aluno_nome');
         erro++;
     } else{
-        unsetError('nome')
+        unsetError('aluno_nome')
     }
     if(cpf.length != 11){
-        setError('cpf');
+        setError('aluno_CPF');
         erro++;
     } else {
         var array = ['1','2','3','4','5','6','7','8','9','0'];
@@ -87,14 +124,15 @@ function addAluno () {
             }
         });
         if(erro2 != 0){
-            setError('cpf');
+            setError('aluno_CPF');
             erro++;
         } else {
-            unsetError('cpf');
+            unsetError('aluno_CPF');
+            cpf = cpf.join('');
         }
     }
     if(matricula.length != 8){
-        setError('matricula');
+        setError('aluno_matricula');
         erro++;
     } else {
         var array = ['1','2','3','4','5','6','7','8','9','0'];
@@ -107,37 +145,39 @@ function addAluno () {
             }
         });
         if(erro2 != 0){
-            setError('matricula');
+            setError('aluno_matricula');
             erro++;
         } else {
-            unsetError('matricula');
+            unsetError('aluno_matricula');
+            matricula = matricula.join('');
         }
     }
+
     if(erro == 0){
         console.log('Tudo ok!');
+        let aluno1 = new aluno(cpf, nome, matricula);
+        alunos.push(aluno1);
     }
-    let aluno = new aluno(nome,cpf,matricula)
-    this.turma.push(aluno);
+    console.log(alunos);
 }
+
+var teacher = 0;
+
 function addProfessor () {
     let nome = document.getElementById('professor_nome').value;
-    let cpf = document.getElementById('professor_cpf').value;
+    let cpf = document.getElementById('professor_CPF').value;
     let area = document.getElementById('professor_area').value;
     let telefone = document.getElementById('professor_telefone').value;
     var erro = 0;
        
-    var setError = (index) => {
-        console.log('Erro!');
-        document.getElementById(index).style.borderColor = 'red';
-    }
     if(nome.trim() == '' || isNaN(nome) === false ){
-        setError('nome');
+        setError('professor_nome');
         erro++;
     } else{
-        unsetError('nome')
+        unsetError('professor_nome')
     }
     if(cpf.length != 11){
-        setError('cpf');
+        setError('professor_CPF');
         erro++;
     } else {
         var array = ['1','2','3','4','5','6','7','8','9','0'];
@@ -150,69 +190,40 @@ function addProfessor () {
             }
         });
         if(erro2 != 0){
-            setError('cpf');
+            setError('professor_CPF');
             erro++;
         } else {
-            unsetError('cpf');
+            unsetError('professor_CPF');
+            cpf = cpf.join('');
         }
     }
-    if(nome.trim() == '' || isNaN(nome) === false ){
-        setError('nome');
-        erro++;
-    } else{
-        unsetError('nome')
-    }
     if(area.trim() == '' || isNaN(area) === false ){
-        setError('area');
+        setError('professor_area');
         erro++;
     } else{
-        unsetError('area')
+        unsetError('professor_area')
     }
     if(erro == 0){
         console.log('Tudo ok!');
+        console.log(new professor(cpf,nome,area,telefone));
+        teacher = new professor(cpf,nome,area,telefone);
     }
-    let professor = new professor(cpf,nome,area,telefone)
-    this.turma.push(professor);
 }
-function addTurma () {
-    let turma = new turma()
-}
-// var alunos1 = [new aluno(12345678912, 'Zeus', 11030340), new aluno(23456789123, 'Posseidon', 11030341), new aluno(34567891234, 'Artemis', 11030342), new aluno(45678912345, 'Atena', 11030343)];
-// var alunos2 = [new aluno(56789123456, 'Hades', 11030344), new aluno(67891234567, 'Nix', 11030345), new aluno(78912345678, 'Orfeu', 11030346), new aluno(89123456789, 'Hipnos', 11030347)];
-// var prof1 = new professor(12123456789, 'Homero', 'História', '(53) 91234-5678');
-// var prof2 = new professor(23456571235, 'Talles', 'Matemática', '(53) 91272-5677');
-// var turmaA = new turma(prof1, alunos1, 'Olimpo');
-// var turmaB = new turma(prof2, alunos2, 'Casa de Hades');
-// var turmas = [turmaA.imprime(), turmaB.imprime()];
-// var tableProf = document.getElementById('rows-prof');
-// var tableAluno = document.getElementById('rows-aluno');
 
-function imprimeDados(){
-    console.log(turmas.length);
-    for(let i = 0; i < turmas.length; i++){
-        console.log(turmas[i]);
-        var prof = tableProf.insertRow(-1);
-        var turmaProf = prof.insertCell(-1);
-        var cpfProf = prof.insertCell(-1);
-        var nomeProf = prof.insertCell(-1);
-        var areaProf = prof.insertCell(-1);
-        var telProf = prof.insertCell(-1);
-        turmaProf.innerHTML = turmas[i].id;    
-        cpfProf.innerHTML = turmas[i].professor.cpf;    
-        nomeProf.innerHTML = turmas[i].professor.nome;    
-        areaProf.innerHTML = turmas[i].professor.area;    
-        telProf.innerHTML = turmas[i].professor.telefone;
-        for (let c = 0; c < turmas[i].alunos.length; c++) {
-            var aluno = tableAluno.insertRow(-1);
-            var turmaAluno = aluno.insertCell(-1);
-            var cpfAluno = aluno.insertCell(-1);
-            var nomeAluno = aluno.insertCell(-1);
-            var matriculaAluno = aluno.insertCell(-1);
-            turmaAluno.innerHTML = turmas[i].id;    
-            cpfAluno.innerHTML = turmas[i].alunos[c].cpf;    
-            nomeAluno.innerHTML = turmas[i].alunos[c].nome;    
-            matriculaAluno.innerHTML = turmas[i].alunos[c].matricula;
-        }    
+function addTurma () {
+    let nome = document.getElementById('turma_nome').value;
+    var erro = 0;
+    if(nome.trim() == '' || isNaN(nome) === false ){
+        setError('turma_nome');
+        erro++;
+    } else{
+        unsetError('turma_nome')
     }
+    if(erro == 0 && alunos.length !== 0 && teacher !== 0){
+        console.log('Tudo ok!');
+        let turma1 = new turma(nome, teacher, alunos);
+        turma1.imprimeTabela();
+    }
+    alunos = [];
+    teacher = 0;
 }
-imprimeDados();
