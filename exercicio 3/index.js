@@ -23,14 +23,16 @@ function enviar(){
                     input.type='text';
                     input.required=true;
                     div.append(input);
-                    colunas+=1
+                    colunas += 1
                 }
             } else if(alunos <= colunas){
-                let tirarColunas = colunas-alunos
+                let tirarColunas = colunas-alunos;
+                let colunaNum = colunas;
                 for(let c=0; c < tirarColunas; c++){
-                    const input = document.getElementById('input'+(c+1));
+                    const input = document.getElementById('input'+(colunaNum-c));
+                    console.log(colunas-c);
                     input.parentNode.removeChild(input);
-                    colunas--;
+                    colunas -= 1;
                 }
             }
         }
@@ -42,8 +44,9 @@ function enviar(){
                 button.id = 'finalizar';
                 button.onclick = () => {
                     for(let c=0; c < colunas; c++){
+                        console.log(colunas);
                         const p = document.createElement('p');
-                        p.id='p'
+                        p.id='p'+(c+1);
                         const input = document.getElementById('input'+(c+1));
                         console.log(input);
                         p.innerHTML = input.value
@@ -52,13 +55,11 @@ function enviar(){
                     botao += 1;
                     enviado +=1;
                     button.disabled = true;
+                    var button2 = document.getElementById('enviar');
+                    button2.disabled = true;
                 }
                 divButton.append(button);
             }
-        }
-        if(enviado > 0){
-            var button = document.getElementById('enviar');
-            button.disabled = true;
         }
     }
 }
